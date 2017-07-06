@@ -1,12 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+    <!--все так делают и я сделаю-->
     <mvc:annotation-driven/>
     <context:component-scan base-package="net"/>
-    <mvc:view-controller path="/" view-name="users_page"/>
+    <mvc:view-controller path="/" view-name="school"/>
+    <context:annotation-config />
 
     <bean id = "resolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
@@ -15,39 +19,86 @@
 
 
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-          destroy-method="close">
-        <property name="driverClassName" value=""/>
-        <property name="url"
-                  value=""/>
-        <property name="username" value=""/>
-        <property name="password" value=""/>
-    </bean>
+    <!-- Настройки бина dataSource будем хранить в отдельном файле -->
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+          p:location="/WEB-INF/jdbc.properties" />
+
+    <!--  бин dataSource -->
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+          p:driverClassName="${jdbc.driverClassName}"
+          p:url="${jdbc.databaseurl}"
+          p:username="${jdbc.username}"
+          p:password="${jdbc.password}" />
 
 
-
-
-
-
-
-
-
-
-
+    <!-- Настройки фабрики сессий Хибернейта -->
     <bean id="hibernate4AnnotatedSessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="annotatedClasses">
-            <list>
-                <value>net.proselyte.bookmanager.model.Book</value>
-            </list>
+        <property name="configLocation">
+            <value>classpath:hibernate.cfg.xml</value>
         </property>
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect
-                </prop>
                 <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.connection.charSet">UTF-8</prop>
             </props>
         </property>
+        <property name="annotatedClasses">
+            <list>
+                <value>net.model.Teacher</value>
+                <value>net.model.Mark</value>
+                <value>net.model.Student</value>
+                <value>net.model.Subject</value>
+                <value>net.model.ClassUnit</value>
+            </list>
+        </property>
     </bean>
+    <!-- Менеджер транзакций -->
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <!-- Бины классов (можно ли их через аннотации назначить?) -->
+    <bean id="ClassUnitDAO" class="net.dao.ClassUnitImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </bean>
+    <bean id="ClassUnitService" class="net.service.ClassUnitServiceImpl">
+        <property name="classUnitDAO" ref="ClassUnitDAO"/>
+    </bean>
+
+    <bean id="MarkDAO" class="net.dao.MarkImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </bean>
+    <bean id="MarkService" class="net.service.MarkServiceImpl">
+        <property name="markDAO" ref="MarkDAO"/>
+    </bean>
+
+    <bean id="SubjectDAO" class="net.dao.SubjectImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </bean>
+    <bean id="SubjectService" class="net.service.SubjectServiceImpl">
+        <property name="SubjectDAO" ref="SubjectDAO"/>
+    </bean>
+
+    <bean id="TeacherDAO" class="net.dao.TeacherImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </bean>
+    <bean id="TeacherService" class="net.service.TeacherServiceImpl">
+        <property name="TeacherDAO" ref="TeacherDAO"/>
+    </bean>
+
+    <bean id="StudentDAO" class="net.dao.StudentImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </bean>
+    <bean id="StudentService" class="net.service.StudentServiceImpl">
+        <property name="StudentDAO" ref="StudentDAO"/>
+    </bean>
+
+
 </beans>

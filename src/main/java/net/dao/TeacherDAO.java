@@ -8,12 +8,12 @@ import java.util.List;
 
 public interface TeacherDAO {
     //create
-    void add(Teacher teacher) throws SQLException;
+    void add(Teacher teacher);
     //read
-    List<Teacher> getAll() throws SQLException;
-    Teacher getById(int id) throws SQLException;
+    List<Teacher> getAll() ;
+    Teacher getById(int id);
     //update
-    void update(Teacher teacher) throws SQLException;
+    void update(Teacher teacher);
     //remove
-    void remove(int id) throws SQLException;
+    void remove(int id) ;
 }

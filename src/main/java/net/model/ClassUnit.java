@@ -10,13 +10,13 @@ import java.util.Set;
 public class ClassUnit{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", unique = true, nullable = false)
-    private long id;
+    @Column(name = "id", unique = true, nullable = false)
+    private int id;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "classUnit")
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "classUnit")
     private Set<Student> students;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Mark> marks;
 
 
@@ -27,10 +27,10 @@ public class ClassUnit{
 
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
     public Set<Student> getStudents() {

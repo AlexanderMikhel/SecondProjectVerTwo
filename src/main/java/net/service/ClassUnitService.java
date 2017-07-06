@@ -8,12 +8,12 @@ import java.util.List;
 
 public interface ClassUnitService {
 
-    void add(ClassUnit classUnit) throws SQLException;
+    void add(ClassUnit classUnit);
 
-    List<ClassUnit> getAll() throws SQLException;
-    ClassUnit getById(int id) throws SQLException;
+    List<ClassUnit> getAll() ;
+    ClassUnit getById(int id) ;
 
-    void update(ClassUnit classUnit) throws SQLException;
+    void update(ClassUnit classUnit);
 
-    void remove(int id) throws SQLException;
+    void remove(int id) ;
 }

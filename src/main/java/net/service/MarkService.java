@@ -1,15 +1,14 @@
-package net.dao;
+package net.service;
+
 
 import net.model.Mark;
-import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
 import java.util.List;
 
-
-public interface MarkDAO {
+public interface MarkService {
     //create
-    void add(Mark mark);
+    void add(Mark mark) ;
     //read
     List<Mark> getAll() ;
     Mark getById(int id) ;
@@ -17,5 +16,4 @@ public interface MarkDAO {
     void update(Mark mark) ;
     //remove
     void remove(int id) ;
-
 }

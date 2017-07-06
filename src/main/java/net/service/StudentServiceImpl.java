@@ -5,31 +5,40 @@ import net.dao.StudentDAO;
 import net.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.List;
 @org.springframework.stereotype.Service
 public class StudentServiceImpl implements StudentService{
-    @Autowired
+
     private StudentDAO studentDAO;
 
-    public void add(Student student) throws SQLException {
+    public StudentDAO getStudentDAO() {
+        return studentDAO;
+    }
+
+    public void setStudentDAO(StudentDAO studentDAO) {
+        this.studentDAO = studentDAO;
+    }
+    @Transactional
+    public void add(Student student)  {
         this.studentDAO.add(student);
     }
-
-    public List<Student> getAll() throws SQLException {
+    @Transactional
+    public List<Student> getAll()  {
         return this.studentDAO.getAll();
     }
-
-    public Student getById(int id) throws SQLException {
+    @Transactional
+    public Student getById(int id)  {
         return this.studentDAO.getById(id);
     }
-
-    public void update(Student student) throws SQLException {
+    @Transactional
+    public void update(Student student)  {
         this.studentDAO.update(student);
     }
-
-    public void remove(int id) throws SQLException {
+    @Transactional
+    public void remove(int id)  {
         this.studentDAO.remove(id);
     }
 }

@@ -9,12 +9,12 @@ import java.util.List;
 
 public interface ClassUnitDAO {
     //create
-    void add(ClassUnit classUnit) throws SQLException;
+    void add(ClassUnit classUnit);
     //read
-    List<ClassUnit> getAll() throws SQLException;
-    ClassUnit getById(int id) throws SQLException;
+    List<ClassUnit> getAll();
+    ClassUnit getById(int id);
     //update
-    void update(ClassUnit classUnit) throws SQLException;
+    void update(ClassUnit classUnit);
     //remove
-    void remove(int id) throws SQLException;
+    void remove(int id);
 }

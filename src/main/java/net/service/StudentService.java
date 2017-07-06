@@ -8,12 +8,12 @@ import java.util.List;
 
 public interface StudentService {
     //create
-    void add(Student student) throws SQLException;
+    void add(Student student) ;
     //read
-    List<Student> getAll() throws SQLException;
-    Student getById(int id) throws SQLException;
+    List<Student> getAll() ;
+    Student getById(int id) ;
     //update
-    void update(Student student) throws SQLException;
+    void update(Student student) ;
     //remove
-    void remove(int id) throws SQLException;
+    void remove(int id) ;
 }

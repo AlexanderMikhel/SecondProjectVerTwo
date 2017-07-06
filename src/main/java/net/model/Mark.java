@@ -1,6 +1,8 @@
 package net.model;
 
 
+
+
 import javax.persistence.*;
 import java.sql.Date;
 @Entity
@@ -8,24 +10,24 @@ public class Mark{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID",unique = true,nullable = false)
-    private long id;
+    private int id;
     @Column
     private int value;
-    @Column
+    @Column()
     private Date date;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.DETACH)
     private Subject subject;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.DETACH)
     private Teacher teacher;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.DETACH)
     private Student student;
 
     public Mark(){}
 
-    public long getId() {
+    public int getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
     public int getValue() {
@@ -63,6 +65,12 @@ public class Mark{
         return new String("MarkID:"+getId()+", date: "+date.toString()+", value: "+getValue()+" by subject: "
                 +getSubject().getName()+"\nto student: "+getStudent().toString())+"from teacher: "+getTeacher().getFirstName()+" "+getTeacher().getLastName();
     }
+    public String valueString(){
+        if (value == 0)
+            return null;
+        return "value"+value;
+    }
+
 
     @Override
     public boolean equals(Object o) {

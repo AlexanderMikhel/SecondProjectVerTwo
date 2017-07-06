@@ -3,34 +3,35 @@ package net.controller;
 import net.model.ClassUnit;
 import net.service.ClassUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.*;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 
-@org.springframework.stereotype.Controller
-@RequestMapping("/classes")
+@Controller
+@RequestMapping("/classController")
 public class ClassUnitController {
 
     private ClassUnitService classUnitService;
+
     @Autowired
+    @Qualifier(value = "ClassUnitService")
     public void setClassUnitService(ClassUnitService classUnitService){
         this.classUnitService = classUnitService;
     }
 
     @RequestMapping(value = "classes",method = RequestMethod.GET)
         public String classesList(Model model) throws SQLException {
-        model.addAttribute("class", new ClassUnit());
-        model.addAttribute("classesList",this.classUnitService.getAll());
+        model.addAttribute("classUnit", new ClassUnit());
+        model.addAttribute("classes",this.classUnitService.getAll());
 
         return "classes";
     }
 
-    @RequestMapping(value = "/classes/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/classes/add")
     public String addClass(@ModelAttribute("classUnit") ClassUnit classUnit) throws SQLException {
         if(classUnit.getId() == 0) {
             this.classUnitService.add(classUnit);
@@ -38,27 +39,28 @@ public class ClassUnitController {
         else {
             this.classUnitService.update(classUnit);
         }
-        return "redirect:/classes";
+        return "redirect:/classController/classes";
     }
 
-    @RequestMapping("/remove/{id}")
+
+    @RequestMapping(value = "/remove/{id}", method = RequestMethod.GET)
     public String removeClass(@PathVariable("id") int id) throws SQLException {
         this.classUnitService.remove(id);
 
-        return "redirect:/classes";
+        return "redirect:/classController/classes";
     }
 
-    @RequestMapping("edit/{id}")
+    @RequestMapping(value = "/edit/{id}")
     public String editClass(@PathVariable("id") int id, Model model) throws SQLException {
-        model.addAttribute("class", this.classUnitService.getById(id));
+        model.addAttribute("classUnit", this.classUnitService.getById(id));
         model.addAttribute("classesList", this.classUnitService.getAll());
 
-        return "classes";
+        return "redirect:/classController/classes";
     }
 
     @RequestMapping("/classData/{id}")
     public String classData(@PathVariable("id") int id, Model model) throws SQLException {
-        model.addAttribute("class",this.classUnitService.getById(id));
+        model.addAttribute("classUnit",this.classUnitService.getById(id));
 
         return "classData";
     }

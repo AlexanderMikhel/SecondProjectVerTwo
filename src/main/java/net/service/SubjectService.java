@@ -10,12 +10,12 @@ import java.util.List;
  */
 public interface SubjectService {
     //create
-    void add(Subject subject) throws SQLException;
+    void add(Subject subject);
     //read
-    List<Subject> getAll() throws SQLException;
-    Subject getById(int id) throws SQLException;
+    List<Subject> getAll() ;
+    Subject getById(int id) ;
     //update
-    void update(Subject subject) throws SQLException;
+    void update(Subject subject) ;
     //remove
-    void remove(int id) throws SQLException;
+    void remove(int id) ;
 }
