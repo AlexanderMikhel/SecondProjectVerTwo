@@ -9,17 +9,17 @@ import java.sql.Date;
 public class Mark{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID",unique = true,nullable = false)
+    @Column(name = "id",unique = true,nullable = false)
     private int id;
     @Column
     private int value;
     @Column()
     private Date date;
-    @OneToOne(cascade = CascadeType.DETACH)
+    @OneToOne(cascade = CascadeType.REFRESH)
     private Subject subject;
-    @OneToOne(cascade = CascadeType.DETACH)
+    @OneToOne(cascade = CascadeType.REFRESH)
     private Teacher teacher;
-    @OneToOne(cascade = CascadeType.DETACH)
+    @OneToOne(cascade = CascadeType.REFRESH)
     private Student student;
 
     public Mark(){}

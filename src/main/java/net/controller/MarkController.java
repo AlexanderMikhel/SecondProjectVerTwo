@@ -47,7 +47,7 @@ public class MarkController {
     }
 
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.GET)
-    public String removeMark(@PathVariable("id") int id) throws SQLException {
+    public String removeMark(@PathVariable("id") int id) {
         this.markService.remove(id);
 
         return "redirect:/markController/marks";
