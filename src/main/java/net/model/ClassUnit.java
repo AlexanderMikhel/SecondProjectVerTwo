@@ -13,14 +13,14 @@ public class ClassUnit{
     @Column(name = "ID", unique = true, nullable = false)
     private int id;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "classUnit")
+    @OneToMany(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER,mappedBy = "classUnit")
     private Set<Student> students;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.REFRESH,fetch = FetchType.LAZY)
     private Set<Mark> marks;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REFRESH)
     private Teacher teacher;
 
     public ClassUnit(){

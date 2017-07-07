@@ -14,7 +14,7 @@ public class Student{
     @Column(name = "LAST_NAME")
     private String lastName;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.REFRESH)
     @JoinTable(name = "STUD_CLASS",
             joinColumns = @JoinColumn(name = "ID_STUDENT"),
     inverseJoinColumns = @JoinColumn(name = "ID_CLASS"))

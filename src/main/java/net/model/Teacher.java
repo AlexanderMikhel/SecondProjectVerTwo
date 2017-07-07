@@ -16,7 +16,7 @@ public class Teacher{
     @Column(name = "LAST_NAME")
     private String lastName;
     @OneToOne
-    (cascade = CascadeType.ALL)
+    (cascade = CascadeType.REFRESH)
     private Subject subject;
 
     public Teacher(){}
