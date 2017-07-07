@@ -29,6 +29,7 @@ public class ClassUnitImpl implements ClassUnitDAO {
 
     public List<ClassUnit> getAll(){
         Session session = this.sessionFactory.getCurrentSession();
+
         List<ClassUnit> classUnits = session.createQuery("from ClassUnit").list();
 
         return classUnits;
@@ -36,6 +37,7 @@ public class ClassUnitImpl implements ClassUnitDAO {
 
     public ClassUnit getById(int id){
         Session session = this.sessionFactory.getCurrentSession();
+
         ClassUnit classUnit = (ClassUnit) session.load(ClassUnit.class,new Integer(id));
 
         return classUnit;

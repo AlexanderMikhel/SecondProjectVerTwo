@@ -61,9 +61,10 @@ public class MarkController {
         return "marks";
     }
 
-    @RequestMapping("markData/{id}")
+    @RequestMapping(value = "markData/{id}",method=RequestMethod.GET)
     public String markData(@PathVariable("id") int id, Model model)  {
-        model.addAttribute("mark",this.markService.getById(id));
+         Mark mark = this.markService.getById(id);
+        model.addAttribute("mark",mark);
 
         return "markData";
     }

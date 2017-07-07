@@ -1,6 +1,7 @@
 package net.dao;
 
 import net.model.Mark;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -30,8 +31,10 @@ public class MarkImpl implements MarkDAO {
 
     public Mark getById(int id){
         Session session = this.sessionFactory.getCurrentSession();
+        /*
         Mark mark = (Mark) session.load(Mark.class,new Integer(id));
-
+        */
+        Mark mark = (Mark) session.get(Mark.class,id);
         return mark;
     }
 
